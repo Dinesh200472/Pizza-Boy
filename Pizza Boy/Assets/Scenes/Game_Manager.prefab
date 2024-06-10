@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6654317492610690640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8846740524935866920}
+  - component: {fileID: 3714714678156812702}
+  - component: {fileID: 6096245440010653180}
+  m_Layer: 0
+  m_Name: Game_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8846740524935866920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654317492610690640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 116.62, y: -1.6, z: 121}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3714714678156812702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654317492610690640}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccdaa6044aad7d4d8f31b67c7f13c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
+  vehicle:
+  - {fileID: 8717113402154326899, guid: 219edf419bb0d1b4382b7aba4204b8cd, type: 3}
+  - {fileID: 4837137465059354736, guid: fb5b4ee48c5786e4eaa9100436d0eb2a, type: 3}
+  - {fileID: 3718903058307776267, guid: e4b11a30cdeeec84aa0cccffa22b8ebc, type: 3}
+  - {fileID: 3667448282602264632, guid: 45ce9ba8715fe6e46b0b27a035dd137f, type: 3}
+  - {fileID: 3785102699790077152, guid: dd92f35d12923554494b14944797065a, type: 3}
+--- !u!114 &6096245440010653180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654317492610690640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7484247a7f19c4e49a3946b8de97166b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicleDataArray:
+  - {fileID: 11400000, guid: 8255f7a0c1824fe4b8760f05e7e600b4, type: 2}
+  - {fileID: 11400000, guid: 88630f9964b39364b8b1a78f4a9823cb, type: 2}
+  - {fileID: 11400000, guid: 994cacb8da41f004395f89334431a529, type: 2}
+  - {fileID: 11400000, guid: 69f0f04b319cd43448fb7652a9757312, type: 2}
+  - {fileID: 11400000, guid: 24578f8a9878f8946afe7129b3a5d610, type: 2}
+  targets: []
+  index: 0
