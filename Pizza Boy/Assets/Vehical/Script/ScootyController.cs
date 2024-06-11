@@ -22,7 +22,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     void Update()
     {
-        GetInput();
+        //GetInput();
     }
 
     void FixedUpdate()

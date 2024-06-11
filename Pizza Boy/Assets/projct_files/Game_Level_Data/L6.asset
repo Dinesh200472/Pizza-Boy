@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f99da8d14c384c4c9c13687df2e1eb7, type: 3}
+  m_Name: L6
+  m_EditorClassIdentifier: 
+  no_of_target: 2
+  target:
+  - {fileID: 5564623544333312328, guid: 317f09997568ea2408177a35541bb421, type: 3}
+  - {fileID: 3162225141948308478, guid: 9d93187c72279f84a81450b6b677bfb5, type: 3}
+  pizza: 0100000002000000
+  Cash: 750
+  timer: 80

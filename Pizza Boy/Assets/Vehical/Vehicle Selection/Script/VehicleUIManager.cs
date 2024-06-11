@@ -25,7 +25,8 @@ public class VehicleUIManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialize or do any setup if required
+        GameObject x = GameObject.FindWithTag("Car");
+        GetPlayerVehicle(x);
     }
 
     public void GetPlayerVehicle(GameObject temp)

@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/VehicleSelection.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/projct_files/project_scene/mainmenu.unity
+    guid: c850ee8c3b14cc8459e7e186857cf567
   - enabled: 1
-    path: Assets/Scenes/Pizza Boy.unity
-    guid: 7e6d3f4e5d896154ab4438845532ac3e
+    path: Assets/projct_files/project_scene/openworld.unity
+    guid: 610867308cdd1f84bb3a9026bc3b12a2
   m_configObjects: {}

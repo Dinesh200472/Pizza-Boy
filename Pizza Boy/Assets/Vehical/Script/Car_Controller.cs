@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Car_Controller : MonoBehaviour
 {
+    public static bool isfinished;
     public enum Axel
     {
         Front,
@@ -45,7 +46,7 @@ public class Car_Controller : MonoBehaviour
 
     void Update()
     {
-        //GetInput();
+       // GetInput();
         WheelSkid();
     }
     void LateUpdate()
@@ -169,6 +170,14 @@ public class Car_Controller : MonoBehaviour
             {
                 wheel.WheelEffectObj.GetComponentInChildren<TrailRenderer>().emitting = false;
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = true;
+            finish_manager.finish_fn();
         }
     }
 }
