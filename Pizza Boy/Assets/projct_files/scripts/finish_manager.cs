@@ -7,7 +7,7 @@ public  class finish_manager
     public  static GameObject finish;
     public static GameObject next_level;
     public static GameObject gps;
-    private static  int count=1;
+    public  static  int count=1;
     
   
     public static void update(GameObject x,GameObject Y,GameObject z)

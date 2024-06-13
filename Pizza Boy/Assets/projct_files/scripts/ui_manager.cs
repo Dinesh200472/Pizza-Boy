@@ -34,6 +34,7 @@ public class ui_manager : MonoBehaviour
         else
 
         {
+            finish_manager.count = 1;
             Player_Data.update_hats(-1);
             Button_Data.retry(Player_Data.level);
         }

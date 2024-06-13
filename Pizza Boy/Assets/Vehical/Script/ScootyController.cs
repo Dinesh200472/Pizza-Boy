@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class ScootyController : MonoBehaviour, IVehicleController
 {
+    public static bool isfinished = false;
+    public bool Done;
     RaycastHit hit;
     public float moveInput, steerInput, rayLength, currentVelocityOffset;
     public Vector3 velocity;
@@ -23,6 +26,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
     void Update()
     {
         //GetInput();
+        Done = isfinished;
     }
 
     void FixedUpdate()
@@ -165,6 +169,27 @@ public class ScootyController : MonoBehaviour, IVehicleController
             return false;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = true;
+        }
 
-   
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = false;
+        }
+    }
+
+    public bool OnTarget()
+    {
+        return Done;
+    }
+
+
 }

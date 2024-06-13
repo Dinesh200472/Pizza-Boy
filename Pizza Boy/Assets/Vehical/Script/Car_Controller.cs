@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
 using UnityEngine;
+using UnityEngine.XR;
 
-public class Car_Controller : MonoBehaviour
+public class Car_Controller : MonoBehaviour,IVehicleController
 {
     public static bool isfinished;
+    public bool Done;
     public enum Axel
     {
         Front,
@@ -46,7 +48,8 @@ public class Car_Controller : MonoBehaviour
 
     void Update()
     {
-       // GetInput();
+        // GetInput();
+        Done = isfinished;
         WheelSkid();
     }
     void LateUpdate()
@@ -177,7 +180,20 @@ public class Car_Controller : MonoBehaviour
         if (other.gameObject.CompareTag("Finish"))
         {
             isfinished = true;
-            finish_manager.finish_fn();
         }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = false;
+        }
+    }
+
+    public bool OnTarget()
+    {
+        return Done;
     }
 }

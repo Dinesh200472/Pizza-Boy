@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public  class Game_Manager : MonoBehaviour
 {
     public GameObject gps;
     
     public static bool isretry;
+    public GameObject Temp_Target;
     public GameObject player;
     public TextMeshProUGUI timetext;
     public TextMeshProUGUI cashtext;
@@ -21,6 +21,7 @@ public  class Game_Manager : MonoBehaviour
     private GameObject prefabToSpawn;
     private Level_Manager levelManager;
     public GameObject next_level_ui;
+    
    
     private void Awake()
     {
@@ -43,9 +44,11 @@ public  class Game_Manager : MonoBehaviour
         assign();
        
       
-        level_load();
-       
+       level_load();
+        //spawnT();
     }
+
+    
     private void Update()
     {
         if (isTimerRunning)
@@ -74,33 +77,41 @@ public  class Game_Manager : MonoBehaviour
 
         
     }
+    IEnumerator SpawnTargets()
+    {
+        for (int i = 0; i < Level_Data.NoOfPizzas; i++)
+        {
+            Temp_Target = Instantiate(Level_Data.Finishs[i], Level_Data.Finishs[i].transform.position, Level_Data.Finishs[i].transform.rotation);
+            yield return StartCoroutine(WaitForPlayerMsg());
+            
+        }
+    }
+    IEnumerator WaitForPlayerMsg()
+    {
+        while (!PlayerMsg())
+        {
+            yield return null; 
+        }
+    }
+    bool PlayerMsg()
+    {
+        GameObject Temp = GameObject.FindWithTag("Finish");
+        IVehicleController GetCurrentVehicle = player.GetComponent<IVehicleController>();
+        if(GetCurrentVehicle.OnTarget() == true)
+        {
+            Destroy(Temp);//Destroy Current Target
+            
+            return true;
+        }
+        return false;
+    }
     public void level_load()
     {
         try
         {
-            if (Level_Data.NoOfPizzas == 1)
-            {
-                Instantiate(Level_Data.Finsh, Level_Data.Finsh.transform.position, Level_Data.Finsh.transform.rotation);
-            }
-            else
-            {
-                for (int i = 0; i < Level_Data.Finishs.Length; i++)
-                {
-                    Instantiate(Level_Data.Finishs[i], Level_Data.Finishs[i].transform.position, Level_Data.Finishs[i].transform.rotation);
-                }
-
-
-                if (Level_Data.Vehicle != null)
-                {
-
-                    Instantiate(Level_Data.Vehicle, Level_Data.Spawm.transform.position, Level_Data.Spawm.transform.rotation);
-                    gps.SetActive(true);
-
-                }
-                else
-                    Debug.Log("not availabe");
-            }
-           
+            player = Instantiate(Level_Data.Vehicle, Level_Data.Spawm.transform.position, Level_Data.Spawm.transform.rotation);
+            StartCoroutine(SpawnTargets());
+            gps.SetActive(true);
         }
         catch(Exception e)
         {

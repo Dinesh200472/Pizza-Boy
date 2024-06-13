@@ -2,9 +2,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CycleController : MonoBehaviour
+public class CycleController : MonoBehaviour,IVehicleController
 {
-    public static bool isfinished;
+    public static bool isfinished = false;
+    public bool Done;
     public float maxSpeed = 20f;
     public float acceleration = 10f;
     public float brakeForce = 20f;
@@ -28,11 +29,13 @@ public class CycleController : MonoBehaviour
 
     void Start()
     {
+        isfinished = false;
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
+        Done = isfinished ? true : false;
         // Update input values and rotate handlebar, pedals, and wheels
        GetInput();
         RotateHandlebar();
@@ -180,15 +183,28 @@ public class CycleController : MonoBehaviour
             rearWheel.localRotation = Quaternion.Euler(0, 0, wheelRotation);
         }
     }
-    private void OnTriggerEnter(Collider collison)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collison.gameObject.CompareTag("Finish"))
+        if (other.gameObject.CompareTag("Finish"))
         {
             finish_manager.finish_fn();
-            GameObject collideobjct = collison.gameObject;
-            Destroy(collideobjct);
             isfinished = true;
-            
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = false;
         }
     }
+
+    public bool OnTarget()
+    {
+        return Done;
+    }
+
+
 }
