@@ -16,11 +16,16 @@ public class Menu_Manager : MonoBehaviour
     [SerializeField] Camera CAM;
     [SerializeField] GameObject point;
     [SerializeField] Transform vsa;
-  
+
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
 
         Time.timeScale = 1;
+        
 
 
     }
@@ -31,9 +36,11 @@ public class Menu_Manager : MonoBehaviour
         try
         {
 
-
-            CAM.transform.DOMove   (point.transform.position,2);
+            _AdsManager.instance._bannerAds.HideBannerAds();    
+            CAM.transform.DOMove(point.transform.position,2);
             CAM.transform.rotation.SetLookRotation(vsa.transform.position);
+       
+
         }
         catch(Exception e)
         {
@@ -44,7 +51,9 @@ public class Menu_Manager : MonoBehaviour
     }
     public void level_menu()
     {
-      vehicle_selection.SetActive(true);
+       
+        
+        vehicle_selection.SetActive(true);
     
 
     }

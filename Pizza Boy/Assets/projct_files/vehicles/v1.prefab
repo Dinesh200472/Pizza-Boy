@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5773419a3331bc049a5bed419de70f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Done: 0
   moveInput: 0
   steerInput: 0
   rayLength: 2
@@ -125,7 +126,7 @@ MonoBehaviour:
   SkidObj: {fileID: 5425942921461743908}
   derivableSurface:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   isBrake: 0
 --- !u!1 &862614002193123444
 GameObject:

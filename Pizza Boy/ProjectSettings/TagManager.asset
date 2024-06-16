@@ -7,6 +7,8 @@ TagManager:
   - Target
   - Car
   - Vehicle
+  - crash\
+  - Crashed
   layers:
   - Default
   - TransparentFX

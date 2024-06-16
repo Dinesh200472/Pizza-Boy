@@ -9,19 +9,19 @@ public class Level_Manager : MonoBehaviour
    
     public GameObject Hats;
     public static  int currentlevel;
-    public GameObject level_menu;
+    public GameObject[] stages = new GameObject[0];
+    [SerializeField] private int CurrentStage=1;
     public GameObject Spawn;
-    [Header("Target")]
-    public GameObject[] f1 = new GameObject[5];
     [Header("buttons")]
-    public   Button[] l = new Button[5];
-    [Header("LeveL")]
-    public LeveL_Creation L1;
-    public LeveL_Creation L6;
+    public   Button[] l = new Button[20];
+    public GameObject Level_menu;
+    
+   
    
     public Level_Manager instance;
     private void Awake()
     {
+        int s1 = SceneManager.GetActiveScene().buildIndex;
         // Ensure only one instance of this script exists
         if (instance == null)
         {
@@ -32,98 +32,32 @@ public class Level_Manager : MonoBehaviour
         {
             Debug.Log("null");
         }
+        if(s1 ==1)
+        {
+            Destroy(gameObject);
+        }
+        
        
     }
 
     private void Start()
     {
-
-        Debug.Log(Level_Data.NoOfPizzas);
+       
+        CurrentStage = 0;
+        stages[0].SetActive(true);
+     
+       
         assign_buttons();
+        //Button_Data.level_sd();
  
        
     }
-    
-    public void  Level_1()
+    public void Update()
     {
-        if (check_hats() || Game_Manager.isretry)
-        {
-           
-            level_menu.SetActive(false);
-            Player_Data.level = 1;
-            Level_Data.update_data(L6.Cash, L6.pizza, Spawn, L6.target, L6.timer,L6.no_of_target);
-            Debug.Log(Level_Data.NoOfPizzas);
-            //Level_Data.update_data(100, 1, Spawn, f1[0], 45);
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
-
+        
     }
-    public void Level_2()
-    {
-        if (check_hats())
-        {
-            level_menu.SetActive(false);
-            Player_Data.level = 2;
 
-            Level_Data.update_data(200, 2, Spawn, f1[1], 60);
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
-    }
-    public void Level_3()
-    {
-        if (check_hats())
-        {
-            level_menu.SetActive(false);
-            Player_Data.level = 3;
 
-            Level_Data.update_data(300, 3, Spawn, f1[2], 60);
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
-    }
-    public void Level_4()
-    {
-        if (check_hats())
-        {
-            level_menu.SetActive(false);
-            Player_Data.level = 4;
-
-            Level_Data.update_data(400, 4, Spawn, f1[3], 80);
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
-    }
-    public void Level_5()
-    {
-        if (check_hats())
-        {
-            level_menu.SetActive(false);
-
-            Player_Data.level = 5;
-            Level_Data.update_data(500, 5, Spawn, f1[4], 90);
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
-    }
-    
-   
     public void assign_buttons()
     {
         Button_Data.update_data(l);
@@ -143,6 +77,68 @@ public class Level_Manager : MonoBehaviour
     public void not_enough_hats()
        {
          Hats.SetActive(true);
+    }
+    public void Level(LeveL_Creation L)
+    {
+        if (check_hats() || Game_Manager.isretry)
+        {
+            
+            Level_Data.update_data(L.Level,L.Cash, L.pizza, Spawn, L.target, L.timer, L.no_of_target);
+            Debug.Log(Level_Data.NoOfPizzas);
+            Level_menu.SetActive(false);
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            not_enough_hats();
+        }
+
+    }
+    public void Next_Stage()
+    {
+        
+        if(CurrentStage==stages.Length-1)
+        {
+            
+            return;
+        }
+        else
+        {
+            stages[CurrentStage].SetActive(false);
+            stages[CurrentStage+1].SetActive(true);
+            CurrentStage += 1;
+           
+        }
+       
+       
+    }
+    public void Prev_Stage()
+    {
+        
+        if(CurrentStage ==0)
+        {
+           
+            return;
+        }
+        else
+        {
+            stages[CurrentStage].SetActive(false);
+            stages[CurrentStage - 1].SetActive(true);
+            CurrentStage -= 1;
+         
+        }
+      
+        
+    }
+    public void unlock_button( )
+    {
+        int Unlocked_levels = Player_Data.level;
+        Debug.Log("-------------Playeer_Level" + Level_Data.Level);
+        
+        for (int i = 0; i <Unlocked_levels; i++)
+        {
+            l[i].interactable = true;
+        }
     }
 
 }

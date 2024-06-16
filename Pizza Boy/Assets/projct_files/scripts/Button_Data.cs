@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Button_Data 
 {
-    public static Button[] button = new Button[5];
+    public static Button[] button = new Button[20];
 
 
     public static void update_data(Button[] l)
@@ -41,7 +41,6 @@ public class Button_Data
             button[i].interactable = true;
         }
         
-
 
     }
     public static void retry(int level)

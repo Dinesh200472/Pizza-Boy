@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Create_LeveL",menuName ="Level")]
 public class LeveL_Creation :ScriptableObject
 {
+    public int Level;
     public int no_of_target;
     public GameObject[] target = new GameObject[0];
   

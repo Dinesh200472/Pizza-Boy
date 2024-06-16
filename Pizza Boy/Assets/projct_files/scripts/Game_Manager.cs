@@ -157,7 +157,7 @@ public  class Game_Manager : MonoBehaviour
     }
     public void next_level()
     {
-        Button_Data.nextlevel(Player_Data.level);
+        Button_Data.nextlevel(Level_Data.Level);
     }
     public void assign()
     {

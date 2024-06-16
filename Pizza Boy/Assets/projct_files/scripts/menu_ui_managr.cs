@@ -9,6 +9,7 @@ public class menu_ui_managr : MonoBehaviour
     {
         if(CycleController.isfinished)
         {
+            Debug.Log("main_menu");
             Destroy(gameObject,1);
         }
     }

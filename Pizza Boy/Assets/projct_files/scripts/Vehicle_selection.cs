@@ -203,7 +203,7 @@ public class Vehicle_selection : MonoBehaviour
         cost.text = vehicle_price[v].ToString();
     }
     public void trans()
-        {
+     {
         Level_menu.SetActive(true);
         gameObject.SetActive(false);
     }

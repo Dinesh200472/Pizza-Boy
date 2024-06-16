@@ -22,8 +22,10 @@ public  class finish_manager
         Debug.Log("finished");
         if(count  == Level_Data.NoOfPizzas)
         {
-
-            Player_Data.update_data(Level_Data.Cash);
+            if(_RewardedAds.isrewarded)
+            Player_Data.update_data(Level_Data.Level, Level_Data.Cash*2);
+            else
+                Player_Data.update_data(Level_Data.Level, Level_Data.Cash);
             finish.SetActive(true);
             Time.timeScale = 0;
 

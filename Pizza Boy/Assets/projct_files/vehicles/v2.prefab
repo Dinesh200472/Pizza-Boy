@@ -1245,7 +1245,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 16511
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: d71c36d3239d7bc4aa40c97169e51172, type: 2}
   m_TargetDisplay: 0
@@ -1306,9 +1306,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93480225460e5524296e417f00eac4e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAcceleration: 150
-  brakeAcceleration: 50
-  turnSensitivity: 2
+  Done: 0
+  maxAcceleration: 200
+  brakeAcceleration: 100
+  turnSensitivity: 0.5
   maxSteerAngle: 45
   wheels:
   - wheelmodel: {fileID: 925746256502948687}

@@ -26,6 +26,7 @@ public class CycleController : MonoBehaviour,IVehicleController
     private float steerInput;
     private bool isBraking = false;
     private float pedalRotation;
+    public ui_manager ui;
 
     void Start()
     {
@@ -190,7 +191,7 @@ public class CycleController : MonoBehaviour,IVehicleController
             finish_manager.finish_fn();
             isfinished = true;
         }
-
+       
     }
 
     private void OnTriggerExit(Collider other)
@@ -198,6 +199,22 @@ public class CycleController : MonoBehaviour,IVehicleController
         if (other.gameObject.CompareTag("Finish"))
         {
             isfinished = false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Respawn"))
+        {
+            Debug.Log("respawn");
+            try
+            {
+                ui_manager.crashed();
+
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
         }
     }
 

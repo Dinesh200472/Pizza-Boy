@@ -10,21 +10,25 @@ public static class Player_Data
     [Range(0,5)]
     public static int hats=3;
     public static int cash;
-    public static int level;
+    public static int level=1;
     public static int no_of_owned_vehicle = 0;
     public static int[] owned_vehicle = new int[8];
 
     public static void update_data(int x, int y)
     {
-        level = x;
-        cash = y;
-        save(level, cash);
+        if (x > level)
+        {
+
+            level = x;
+        }
+        cash += y;
+       
     }
     public static void update_data(int x)
     {
 
         cash += x;
-        save(level, cash);
+       
     }
     public static void save(int l, int c)
     {
@@ -81,6 +85,7 @@ public static class Player_Data
     }
     public static void save_vehicle()
     {
+        PlayerPrefs.SetInt("savedLevel", level);
         PlayerPrefs.SetInt("savedCash", cash);
         PlayerPrefs.SetInt("no_vehicle_ownd",no_of_owned_vehicle);
         
