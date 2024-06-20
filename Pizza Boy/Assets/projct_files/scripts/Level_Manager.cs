@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Level_Manager : MonoBehaviour
 {
-   
+    public static Level_Manager instance;
     public GameObject Hats;
     public static  int currentlevel;
     public GameObject[] stages = new GameObject[0];
@@ -18,7 +18,6 @@ public class Level_Manager : MonoBehaviour
     
    
    
-    public Level_Manager instance;
     private void Awake()
     {
         int s1 = SceneManager.GetActiveScene().buildIndex;
@@ -40,6 +39,10 @@ public class Level_Manager : MonoBehaviour
        
     }
 
+    public void OnDestroy_Duplicate()
+    {
+        Destroy(gameObject);
+    }
     private void Start()
     {
        
@@ -133,12 +136,22 @@ public class Level_Manager : MonoBehaviour
     public void unlock_button( )
     {
         int Unlocked_levels = Player_Data.level;
-        Debug.Log("-------------Playeer_Level" + Level_Data.Level);
-        
-        for (int i = 0; i <Unlocked_levels; i++)
+        Debug.Log("-------------Playeer_Level" + Player_Data.level);
+
+        for (int i = 0; i < Unlocked_levels; i++)
         {
-            l[i].interactable = true;
+           if(i==0)
+            {
+                l[i].interactable = true;
+            }
+            else if(i>0)
+            {
+                l[i].interactable = true;
+                l[i+1].interactable = true;
+            }
         }
+       
+       // Button_Data.level_sd();
     }
 
 }

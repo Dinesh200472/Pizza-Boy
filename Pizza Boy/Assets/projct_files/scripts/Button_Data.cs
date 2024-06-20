@@ -18,25 +18,27 @@ public class Button_Data
     }
     public static void nextlevel(int level)
     {
-        for (int i = level;i<=level;i++)
+        button[level].onClick.Invoke();
+        Debug.Log("nextlevel" + level);
+        /*for (int i = level;i<=level;i++)
         {
             Debug.Log("nextlevel" + i);
             try
             {
-                button[i].onClick.Invoke();
+                button[level].onClick.Invoke();
             }
             catch(Exception e)
             {
                 Debug.Log(e.ToString());
 
             }
-        }
+        }*/
     }
     public static void level_sd()
     {
         int unlock = Player_Data.level;
-
-        for (int i = 0; i <= unlock; i++)
+        Debug.Log("-------------Playeer_Level" + Level_Data.Level);
+        for (int i = 0; i < unlock; i++)
         {
             button[i].interactable = true;
         }

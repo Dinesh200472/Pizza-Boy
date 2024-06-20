@@ -27,7 +27,9 @@ public class ui_manager : MonoBehaviour
     }
     public void mainmenu_button()
     {
+        Level_Manager.instance.OnDestroy_Duplicate();
         SceneManager.LoadScene(0);
+        Level_Manager.instance.unlock_button();
     }
     public void retry_level()
     {
@@ -50,6 +52,7 @@ public class ui_manager : MonoBehaviour
     public  static void crashed()
     {
         Time.timeScale = 0;
+        AudioManager.instance.OnCrash();
         crash.SetActive(true);
     }
     public void crash_ad()

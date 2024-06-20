@@ -37,7 +37,6 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     public float turnInput;
     private Rigidbody carrb;
     public Vector3 _centerofmass;
-    //private object wheel;
 
     void Start()
     {
@@ -51,6 +50,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
       //GetInput();
         Done = isfinished;
         WheelSkid();
+       
     }
     void LateUpdate()
     {
@@ -68,12 +68,14 @@ public class Car_Controller : MonoBehaviour,IVehicleController
 
     public void OnAcceleration()
     {
-            moveInput = 1;
+        AudioManager.instance.OnCarMove();
+        moveInput = 1;
             
     }
     public void OnAccelerationBack()
     {
-            moveInput = 0.01f;
+        AudioManager.instance.StopCarMove();
+        moveInput = 0.01f;
     }
 
     public void OnDeceleration()
@@ -111,7 +113,8 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     }
     private void Move()
     {
-        foreach(var wheel in wheels)
+        AudioManager.instance.OnCarMove();
+        foreach (var wheel in wheels)
         {
             if (wheel.axel == Axel.Rear)
             {
@@ -179,6 +182,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            finish_manager.finish_fn();
             isfinished = true;
         }
 
@@ -191,6 +195,23 @@ public class Car_Controller : MonoBehaviour,IVehicleController
             isfinished = false;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            Debug.Log("respawn");
+            try
+            {
+                ui_manager.crashed();
+
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+        }
+    }
+
 
     public bool OnTarget()
     {

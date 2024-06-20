@@ -17,7 +17,7 @@ public class Vehicle_selection : MonoBehaviour
     public GameObject id;
  
    
-    private Vehicle_selection instance;
+    public  Vehicle_selection instance;
     [Header("button")]
     public TextMeshProUGUI cashtext;
     public GameObject nofunds;
@@ -28,6 +28,7 @@ public class Vehicle_selection : MonoBehaviour
     public GameObject vehicleselection;
     public Camera cam;
     public GameObject point;
+    private int i = 0;
 
     private void Awake()
     {
@@ -56,6 +57,15 @@ public class Vehicle_selection : MonoBehaviour
         eqip_or_unlock(v);
 
 
+    }
+
+    public void OnDestroy_Duplicate()
+    {
+        i++;
+        if(i==2)
+        {
+            Destroy(gameObject);
+        }
     }
     public void right()
     {

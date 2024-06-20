@@ -146,6 +146,7 @@ public  class Game_Manager : MonoBehaviour
        
 
         Time.timeScale = 0;
+        AudioManager.instance.OnTimeUp();
         timeup.SetActive(true);
     }
     void  DisplayCash()

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -28,6 +27,9 @@ public class CycleController : MonoBehaviour,IVehicleController
     private float pedalRotation;
     public ui_manager ui;
 
+   // private bool isAcc = false;
+
+
     void Start()
     {
         isfinished = false;
@@ -37,8 +39,7 @@ public class CycleController : MonoBehaviour,IVehicleController
     void Update()
     {
         Done = isfinished ? true : false;
-        // Update input values and rotate handlebar, pedals, and wheels
-       GetInput();
+       //GetInput();
         RotateHandlebar();
         RotatePedals();
         RotateWheels();
@@ -61,12 +62,14 @@ public class CycleController : MonoBehaviour,IVehicleController
     }
     public void OnAcceleration()
     {
+        AudioManager.instance.OnCycleMove();
         Debug.Log("Cycle accelerating");
         moveInput = 1;
     }
 
     public void OnAccelerationBack()
     {
+        AudioManager.instance.StopCycleMove();
         Debug.Log("Cycle acceleration back");
         moveInput = 0.01f;
     }

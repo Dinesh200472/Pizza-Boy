@@ -15,8 +15,8 @@ MonoBehaviour:
   Level: 16
   no_of_target: 2
   target:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8431115719001563518, guid: 637141346fb996648a092c1e9f857c85, type: 3}
+  - {fileID: 7577347670001534463, guid: ae98ba83935c8a341845c19855132b29, type: 3}
   pizza: 0a00000014000000
   Cash: 1200
   timer: 300

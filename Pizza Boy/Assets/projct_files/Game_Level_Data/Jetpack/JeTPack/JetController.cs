@@ -15,61 +15,107 @@ public class JetController : MonoBehaviour
     public float gravitySpeed = 5f;
     private float moveHorizontal, moveVertical;
     private Quaternion targetRotationUp, targetRotationMove;
-    private Vector3 playerStartPosition;
-    private bool isFlyingUp = false;
-    private bool isFlyingDown = false;
-    private bool isMovingInAir = false;
+  
+    public static bool isfinished;
+    private bool Done;
 
     void Start()
     {
-        playerStartPosition = transform.position;
+
     }
 
     void Update()
     {
-        HandleInput();
+        Done = isfinished;
+       // GetInput();
+        //HandleInput();
         if (transform.position.y < -335f)
         {
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         }
+    }
 
-        if(transform.position.y > -300f)
+    private void FixedUpdate()
+    {
+        if(transform.position.y > -295f)
         {
             MoveInAir();
             MoveRotation();
         }
-       
+    }
+
+    void GetInput()
+    {
+        moveHorizontal = Input.GetAxis("Horizontal");
+        moveVertical = Input.GetAxis("Vertical");
+    }
+    void MoveInAir()
+    {
+        
+        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
+        
+        if (movement != Vector3.zero)
+        {
+            Quaternion targetDir = Quaternion.LookRotation(movement);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
+        }
+
+        transform.Translate(movement * flyMoveSpeed * Time.deltaTime, Space.World);
+    }
+    public void OnBrake()
+    {
+        if (transform.position.y < flyHeight)
+        {
+            targetRotationUp = Quaternion.Euler(maxUpRotationAngle, transform.rotation.eulerAngles.y, 0);
+            FlyToHeight();
+            RotationJet();
+        }
+    }
+
+    public void OnBrakeOff()
+    {
+        Gravity_Down();
     }
 
     public void OnAcceleration()
     {
-        if (!isFlyingUp && transform.position.y < flyHeight)
-        {
-            isFlyingUp = true;
-            targetRotationUp = Quaternion.Euler(maxUpRotationAngle, transform.rotation.eulerAngles.y, 0);
-        }
+
+        AudioManager.instance.OnJetMove();
+        moveVertical = 1;
+
+    }
+    public void OnAccelerationBack()
+    {
+        AudioManager.instance.StopJetMove();
+        moveVertical = 0.1f;
     }
 
     public void OnDeceleration()
     {
-        if (!isFlyingDown && transform.position.y > 0)
+        AudioManager.instance.OnJetMove();
+        if (transform.position.y > 0)
         {
-            isFlyingDown = true;
             targetRotationUp = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0);
+            DescendToGround();
+            RotationJet();
         }
     }
+    public void OnDecelerationBack()
+    {
+        AudioManager.instance.StopJetMove();
+    }
 
-    public void SteerLeft()
+    public void Steer_Left()
     {
         moveHorizontal = -1;
     }
 
-    public void SteerRight()
+    public void Steer_Right()
     {
         moveHorizontal = 1;
     }
 
-    public void SteerMid()
+    public void Steer_Mid()
     {
         moveHorizontal = 0;
     }
@@ -87,17 +133,16 @@ public class JetController : MonoBehaviour
             RotationJet();
         }
 
-        moveHorizontal = Input.GetAxis("Horizontal") * controlSensitivity;
-        moveVertical = Input.GetAxis("Vertical") * controlSensitivity;
+       
     }
     void MoveRotation()
     {
         targetRotationMove = targetRotationUp;
-        if (transform.position.y > -300f && (Input.GetAxis("Vertical") > 0))
+        if (transform.position.y > -300f && moveVertical > 0)
         {
             targetRotationMove = Quaternion.Euler(maxMoveRotationAngle, transform.rotation.eulerAngles.y, 0);
         }
-        else if (transform.position.y > -300f && (Input.GetAxis("Horizontal") > 0 || (Input.GetAxis("Horizontal") < 0)))
+        else if (transform.position.y > -300f && ((moveHorizontal < 0) || (moveHorizontal >0)))
         {
             targetRotationMove = Quaternion.Euler(maxMoveRotationAngle, transform.rotation.eulerAngles.y, 0);
         }
@@ -113,22 +158,12 @@ public class JetController : MonoBehaviour
     {
         if (transform.position.y < flyHeight)
         {
+            AudioManager.instance.OnJetMove();
             transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, flyHeight, transform.position.z), Time.deltaTime * flySpeed);
         }
     }
 
-    void MoveInAir()
-    {
-        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
-
-        if (movement != Vector3.zero)
-        {
-            Quaternion targetDir = Quaternion.LookRotation(movement);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
-        }
-
-        transform.Translate(movement * flyMoveSpeed * Time.deltaTime, Space.World);
-    }
+   
 
     void DescendToGround()
     {
@@ -136,11 +171,6 @@ public class JetController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x,-338f, transform.position.z), Time.deltaTime * descendSpeed);
             targetRotationUp = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0);
-        }
-        else
-        {
-            isFlyingDown = false;
-            isMovingInAir = false;
         }
     }
 
@@ -154,4 +184,42 @@ public class JetController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotationUp, Time.deltaTime * 0.02f);
         transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, -335f, transform.position.z), Time.deltaTime * GravitySpeed);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            finish_manager.finish_fn();
+            isfinished = true;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            isfinished = false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            Debug.Log("respawn");
+            try
+            {
+                ui_manager.crashed();
+
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+        }
+    }
+    public bool OnTarget()
+    {
+        return Done;
+    }
+
 }

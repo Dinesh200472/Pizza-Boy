@@ -27,6 +27,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
     {
         //GetInput();
         Done = isfinished;
+       
     }
 
     void FixedUpdate()
@@ -43,12 +44,14 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     public void OnAcceleration()
     {
+        AudioManager.instance.OnScooterMove(); 
         Debug.Log("OnAcceleration called");
         moveInput = 1;
     }
 
     public void OnAccelerationBack()
     {
+        AudioManager.instance.StopScooterMove();
         Debug.Log("OnAccelerationBack called");
         moveInput = 0.01f;
     }
@@ -135,6 +138,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
     void Acceleration()
     {
         Debug.Log("Accelerating with moveInput: " + moveInput);
+       
         rb.velocity = Vector3.Lerp(rb.velocity, moveInput * maxSpeed * transform.forward, Time.fixedDeltaTime * acceleration);
     }
 
@@ -173,6 +177,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            finish_manager.finish_fn();
             isfinished = true;
         }
 
@@ -185,6 +190,23 @@ public class ScootyController : MonoBehaviour, IVehicleController
             isfinished = false;
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            Debug.Log("respawn");
+            try
+            {
+                ui_manager.crashed();
+
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+        }
+    }
+
 
     public bool OnTarget()
     {

@@ -31,7 +31,7 @@ public class Menu_Manager : MonoBehaviour
     }
     public void PLAY()
     {
-       
+
         Main_menu.SetActive(false);
         try
         {

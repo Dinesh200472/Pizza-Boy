@@ -81,7 +81,7 @@ public class Nav_Gps : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Unable to calculate path between {PlayerPrefab.transform.position} and {TargetPrefab.transform.position}!");
+                Debug.Log($"Unable to calculate path between {PlayerPrefab.transform.position} and {TargetPrefab.transform.position}!");
             }
             yield return wait;
         }

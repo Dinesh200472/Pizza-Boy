@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class AI_Vehicle : MonoBehaviour
 {
@@ -11,21 +10,18 @@ public class AI_Vehicle : MonoBehaviour
     public float stopDistance = 2.0f;
     public float slowDownSpeed = 2.0f;
     public float resumeSpeed = 5.0f;
-    public float playerDetectionRadius = 10.0f; // Radius to detect the player
-    public float playerStopDistance = 3.0f; // Distance to stop when player is very close
-    public float playerSlowDownDistance = 7.0f; // Distance to slow down when player is nearby
+    public LayerMask obstacleLayers; // Layer mask to detect obstacles
+    public float sphereCastRadius = 1.0f; // Radius of the sphere cast
 
     private NavMeshAgent agent;
     private int currentWaypointIndex;
     private bool isStopped;
-    private bool playerDetected;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         currentWaypointIndex = 0;
         isStopped = false;
-        playerDetected = false;
 
         if (forwardWaypoints.Count > 0)
         {
@@ -39,14 +35,14 @@ public class AI_Vehicle : MonoBehaviour
         if (forwardWaypoints.Count == 0) return;
 
         HandleObstacleDetection();
-        //HandlePlayerDetection();
 
-        if (!isStopped && !playerDetected)
+        if (!isStopped)
         {
             MoveToNextWaypoint();
         }
 
-        DrawRaycastLineFromCenter();
+        // Uncomment this if you want to visualize the raycast
+        // DrawRaycastLineFromCenter();
     }
 
     void HandleObstacleDetection()
@@ -55,92 +51,38 @@ public class AI_Vehicle : MonoBehaviour
         Vector3 raycastOrigin = transform.position;
         Vector3 raycastDirection = transform.forward;
 
-        if (Physics.Raycast(raycastOrigin, raycastDirection, out hit, obstacleDetectionDistance))
+        // Debugging line to visualize the sphere cast in the Scene view
+        DrawSphereCastLine(raycastOrigin, raycastOrigin + raycastDirection * obstacleDetectionDistance, sphereCastRadius);
+
+        if (Physics.SphereCast(raycastOrigin, sphereCastRadius, raycastDirection, out hit, obstacleDetectionDistance, obstacleLayers))
         {
-            DrawRaycastLine(raycastOrigin, hit.point);
+            Debug.Log("Hit object: " + hit.transform.gameObject.name);
 
-            if (hit.transform.CompareTag("Vehicle"))
+            float distanceToObstacle = hit.distance;
+
+            if (distanceToObstacle < stopDistance)
             {
-                float distanceToObstacle = hit.distance;
-
-                if (distanceToObstacle < stopDistance)
-                {
-                    StopVehicle();
-                }
-                else
-                {
-                    SlowDownVehicle();
-                }
-            }else if(hit.transform.CompareTag("Player"))
+                StopVehicle();
+            }
+            else
             {
-                float distanceToObstacle = hit.distance;
-
-                if (distanceToObstacle < stopDistance)
-                {
-                    StopVehicle();
-                }
-                else
-                {
-                    SlowDownVehicle();
-                }
+                SlowDownVehicle();
             }
         }
         else
         {
-            DrawRaycastLine(raycastOrigin, raycastOrigin + raycastDirection * obstacleDetectionDistance);
-
             ResumeVehicle();
         }
     }
 
-    void HandlePlayerDetection()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, playerDetectionRadius);
-        bool playerNearby = false;
-
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.CompareTag("Player"))
-            {
-                playerNearby = true;
-                float distanceToPlayer = Vector3.Distance(transform.position, hitCollider.transform.position);
-
-                if (distanceToPlayer < playerStopDistance)
-                {
-                    StopVehicle();
-                }
-                else if (distanceToPlayer < playerSlowDownDistance)
-                {
-                    SlowDownVehicle();
-                }
-                else
-                {
-                    ResumeVehicle();
-                }
-
-                break;
-            }
-        }
-
-        if (!playerNearby && playerDetected)
-        {
-            playerDetected = false;
-            ResumeVehicle();
-        }
-
-        playerDetected = playerNearby;
-    }
-
-    void DrawRaycastLine(Vector3 start, Vector3 end)
+    void DrawSphereCastLine(Vector3 start, Vector3 end, float radius)
     {
         Debug.DrawLine(start, end, Color.red);
-    }
-
-    void DrawRaycastLineFromCenter()
-    {
-        Vector3 vehicleCenter = GetComponent<Collider>().bounds.center;
-        Vector3 raycastDirection = transform.forward * obstacleDetectionDistance;
-        Debug.DrawLine(vehicleCenter, vehicleCenter + raycastDirection, Color.blue);
+        // Drawing spheres at the start and end to visualize the sphere cast radius
+        Debug.DrawRay(start, Vector3.up * radius, Color.red);
+        Debug.DrawRay(start, Vector3.down * radius, Color.red);
+        Debug.DrawRay(end, Vector3.up * radius, Color.red);
+        Debug.DrawRay(end, Vector3.down * radius, Color.red);
     }
 
     void MoveToNextWaypoint()
