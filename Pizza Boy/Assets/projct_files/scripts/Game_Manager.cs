@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public  class Game_Manager : MonoBehaviour
@@ -14,18 +15,20 @@ public  class Game_Manager : MonoBehaviour
     public TextMeshProUGUI timetext;
     public TextMeshProUGUI cashtext;
     public GameObject timeup;
-    public   GameObject finish;
+    public GameObject finish;
     public bool isTimerRunning;
-    public float timeRemaining;
+    public static  float timeRemaining;
     public bool isfinished;
     private GameObject prefabToSpawn;
     private Level_Manager levelManager;
     public GameObject next_level_ui;
+    [SerializeField] private TextMeshProUGUI nop;
     
    
     private void Awake()
     {
         DisplayCash();
+        display_nop();
     }
 
 
@@ -51,6 +54,7 @@ public  class Game_Manager : MonoBehaviour
     
     private void Update()
     {
+        extratime();
         if (isTimerRunning)
         {
             if (timeRemaining > 0)
@@ -66,7 +70,7 @@ public  class Game_Manager : MonoBehaviour
                 timeup_fn();
             }
         }
-        if(Car_Controller.isfinished&&isfinished || CycleController.  isfinished && isfinished)
+        if(Car_Controller.isfinished&&isfinished || CycleController.  isfinished && isfinished || ScootyController.isfinished && isfinished)
         {
             finishfn();
             isfinished = false;
@@ -146,7 +150,7 @@ public  class Game_Manager : MonoBehaviour
        
 
         Time.timeScale = 0;
-        AudioManager.instance.OnTimeUp();
+       // AudioManager.instance.OnTimeUp();
         timeup.SetActive(true);
     }
     void  DisplayCash()
@@ -170,13 +174,31 @@ public  class Game_Manager : MonoBehaviour
         Invoke("Reset_Gps", 2);
         Debug.Log("------resert-----");
         DisplayCash();
+        display_nop();
     }
     public  void Reset_Gps()
     {
         gps.SetActive(true);
 
     }
-    
+    public void display_nop()
+    {
+        nop.text = Level_Data.NoOfPizzas + "/";
+
+    }
+    public void extratime()
+    {
+        if(_RewardedAds.adcomplete())
+        {
+            Debug.Log("  -------------------------extratime-------------------------");
+            timeRemaining = Level_Data.time / 2;
+            isTimerRunning = true;
+            return;
+        }
+        _RewardedAds.isrewarded = false;
+       
+    }
+  
    
     
     

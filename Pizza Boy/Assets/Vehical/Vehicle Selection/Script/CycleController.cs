@@ -39,7 +39,7 @@ public class CycleController : MonoBehaviour,IVehicleController
     void Update()
     {
         Done = isfinished ? true : false;
-       //GetInput();
+       GetInput();
         RotateHandlebar();
         RotatePedals();
         RotateWheels();
@@ -212,6 +212,8 @@ public class CycleController : MonoBehaviour,IVehicleController
             try
             {
                 ui_manager.crashed();
+                Destroy(collision.gameObject);  
+            
 
             }
             catch (System.Exception e)

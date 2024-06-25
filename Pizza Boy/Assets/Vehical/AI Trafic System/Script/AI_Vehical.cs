@@ -56,7 +56,7 @@ public class AI_Vehicle : MonoBehaviour
 
         if (Physics.SphereCast(raycastOrigin, sphereCastRadius, raycastDirection, out hit, obstacleDetectionDistance, obstacleLayers))
         {
-            Debug.Log("Hit object: " + hit.transform.gameObject.name);
+           
 
             float distanceToObstacle = hit.distance;
 

@@ -25,7 +25,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     void Update()
     {
-        //GetInput();
+        GetInput();
         Done = isfinished;
        
     }
@@ -198,6 +198,8 @@ public class ScootyController : MonoBehaviour, IVehicleController
             try
             {
                 ui_manager.crashed();
+                Destroy(collision.gameObject);
+
 
             }
             catch (System.Exception e)
@@ -206,7 +208,6 @@ public class ScootyController : MonoBehaviour, IVehicleController
             }
         }
     }
-
 
     public bool OnTarget()
     {

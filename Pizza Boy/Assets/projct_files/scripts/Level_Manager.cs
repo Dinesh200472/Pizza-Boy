@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Level_Manager : MonoBehaviour
 {
     public static Level_Manager instance;
-    public GameObject Hats;
+   
     public static  int currentlevel;
     public GameObject[] stages = new GameObject[0];
     [SerializeField] private int CurrentStage=1;
@@ -69,32 +69,18 @@ public class Level_Manager : MonoBehaviour
     {
         Player_Data.save_vehicle();
     }
-    private bool check_hats()
-    {
-        if (Player_Data.hats > 0)
-        {
-            return true;
-        }
-        else return false;
-    }
-    public void not_enough_hats()
-       {
-         Hats.SetActive(true);
-    }
+  
+   
     public void Level(LeveL_Creation L)
     {
-        if (check_hats() || Game_Manager.isretry)
-        {
+       
             
             Level_Data.update_data(L.Level,L.Cash, L.pizza, Spawn, L.target, L.timer, L.no_of_target);
             Debug.Log(Level_Data.NoOfPizzas);
             Level_menu.SetActive(false);
             SceneManager.LoadScene(1);
-        }
-        else
-        {
-            not_enough_hats();
-        }
+        
+       
 
     }
     public void Next_Stage()

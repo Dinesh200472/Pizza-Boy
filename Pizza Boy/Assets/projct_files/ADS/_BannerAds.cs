@@ -17,7 +17,7 @@ AdUnit_ID= IosAdUnit_ID;
         AdUnit_ID = AndroidAdUnit_ID;
 #endif
 
-        Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+        Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
        
     }
     public void LoadBanner()

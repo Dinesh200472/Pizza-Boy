@@ -3,9 +3,9 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 using DG.Tweening;
-using Unity.VisualScripting;
+
 
 public class Vehicle_selection : MonoBehaviour
 {

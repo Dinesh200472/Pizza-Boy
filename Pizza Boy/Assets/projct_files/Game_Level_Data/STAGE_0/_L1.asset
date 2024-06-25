@@ -18,4 +18,4 @@ MonoBehaviour:
   - {fileID: 1900913410593873299, guid: d4467e59e2f7b8746917b34d6717ede9, type: 3}
   pizza: 01000000
   Cash: 50
-  timer: 60
+  timer: 10

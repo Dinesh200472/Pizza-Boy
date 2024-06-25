@@ -10,15 +10,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scene changes
-        }
-        else
-        {
-            Debug.Log("null");
-        }
     }
 
     void Start()
@@ -57,7 +48,8 @@ public class AudioManager : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Button_Click.Play();
+       
+       // Button_Click.Play();
     }
     public void OnCycleMove()
     {

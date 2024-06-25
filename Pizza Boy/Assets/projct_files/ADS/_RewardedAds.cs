@@ -8,7 +8,7 @@ public class _RewardedAds : MonoBehaviour, IUnityAdsLoadListener,IUnityAdsShowLi
     [SerializeField] private string AndroidAdUnit_ID;
     [SerializeField] private string IosAdUnit_ID;
     private string AdUnit_ID;
-    public static bool isrewarded;
+    public static bool isrewarded = false;
     private void Awake()
     {
 #if UNITY_iOS
@@ -19,16 +19,21 @@ AdUnit_ID= IosAdUnit_ID;
     }
     public void LoadRewardedAd()
     {
+
+        isrewarded = false;
         Advertisement.Load(AdUnit_ID, this);
     }
     public void ShowRewadedAd()
     {
+       
         Advertisement.Show(AdUnit_ID, this);
+        LoadRewardedAd();
     }
 
 
     public void OnUnityAdsAdLoaded(string placementId)
     {
+        isrewarded = false  ;
         throw new System.NotImplementedException();
     }
 
@@ -56,9 +61,16 @@ AdUnit_ID= IosAdUnit_ID;
     {
         if (placementId == AndroidAdUnit_ID && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
-            isrewarded = true;
+           isrewarded   = true;
             Debug.Log("Grand------Reward");
         }
+
+    }
+
+    public static bool adcomplete()
+    {
+        return isrewarded;
+       
 
     }
 
