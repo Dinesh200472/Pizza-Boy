@@ -9,6 +9,7 @@ TagManager:
   - Vehicle
   - crash\
   - Crashed
+  - Ground
   layers:
   - Default
   - TransparentFX

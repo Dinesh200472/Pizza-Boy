@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class VehicleUIManager : MonoBehaviour
 {
+    public GameObject GasDecrease;
+
     private bool isMovingForward = false;
     private bool isMovingBackward = false;
     private bool isTurningRight = false;
     private bool isTurningLeft = false;
     private bool isBraking = false;
+    private bool isGas = false;
     public static VehicleUIManager instance;
 
     [SerializeField] private GameObject activeVehicle;
@@ -25,6 +28,7 @@ public class VehicleUIManager : MonoBehaviour
 
     private void Start()
     {
+       
         GameObject x = GameObject.FindWithTag("Car");
         GetPlayerVehicle(x);
     }
@@ -43,6 +47,14 @@ public class VehicleUIManager : MonoBehaviour
                 Debug.LogWarning("No active vehicle found.");
                 return;
             }
+        }
+        if (JetController.isJet)
+        {
+            GasDecrease.SetActive(true);
+        }
+        else
+        {
+            GasDecrease.SetActive(false);
         }
 
         HandleVehicleControls();
@@ -74,7 +86,24 @@ public class VehicleUIManager : MonoBehaviour
         {
             activeVehicle.SendMessage("OnBrake", SendMessageOptions.DontRequireReceiver);
         }
+        if(isGas)
+        {
+            activeVehicle.SendMessage("OnGasPressed", SendMessageOptions.DontRequireReceiver);
+        }
     }
+
+
+    public void OnGasPress()
+    {
+        isGas = true;
+    }
+
+    public void OnGasReleased()
+    {
+        isGas = false;
+        activeVehicle.SendMessage("OnGasReleased", SendMessageOptions.DontRequireReceiver);
+    }
+
 
     public void OnBrakePressed()
     {

@@ -73,15 +73,10 @@ public class Level_Manager : MonoBehaviour
    
     public void Level(LeveL_Creation L)
     {
-       
-            
-            Level_Data.update_data(L.Level,L.Cash, L.pizza, Spawn, L.target, L.timer, L.no_of_target);
-            Debug.Log(Level_Data.NoOfPizzas);
-            Level_menu.SetActive(false);
-            SceneManager.LoadScene(1);
-        
-       
-
+        Level_Data.update_data(L.Level, L.Cash, L.pizza, Spawn, L.target, L.timer, L.no_of_target);
+        Debug.Log(Level_Data.NoOfPizzas);
+        Level_menu.SetActive(false);
+        SceneManager.LoadScene(1);
     }
     public void Next_Stage()
     {

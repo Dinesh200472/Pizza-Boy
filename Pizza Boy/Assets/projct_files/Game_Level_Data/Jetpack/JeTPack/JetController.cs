@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class JetController : MonoBehaviour
 {
-    
+    public static bool isJet = false;
+    public GameObject smoke;
     public float GravitySpeed;
     public float flyHeight = 10f;
     public float flySpeed = 10f;
@@ -15,19 +16,23 @@ public class JetController : MonoBehaviour
     public float gravitySpeed = 5f;
     private float moveHorizontal, moveVertical;
     private Quaternion targetRotationUp, targetRotationMove;
-  
+
     public static bool isfinished;
     private bool Done;
+    public bool osjet = false;
 
     void Start()
     {
-
+        smoke.GetComponent<ParticleSystem>().Pause();
+        isJet = true;
+        transform.position = new Vector3(-800.580017f, -345f, 49.0600014f);
     }
 
     void Update()
     {
         Done = isfinished;
-       // GetInput();
+        osjet = isJet;
+        // GetInput();
         //HandleInput();
         if (transform.position.y < -335f)
         {
@@ -37,7 +42,7 @@ public class JetController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(transform.position.y > -295f)
+        if (transform.position.y > -335f)
         {
             MoveInAir();
             MoveRotation();
@@ -49,11 +54,24 @@ public class JetController : MonoBehaviour
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
     }
+    void PlaySmoke()
+    {
+        var particleSystem = smoke.GetComponent<ParticleSystem>();
+        //particleSystem.Clear(); // Clear the particle system to reset it
+        particleSystem.Play();
+    }
+
+    void StopSmoke()
+    {
+        var particleSystem = smoke.GetComponent<ParticleSystem>();
+        particleSystem.Stop();
+        particleSystem.Clear(); // Clear the particle system to ensure it stops
+    }
     void MoveInAir()
     {
-        
+
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
-        
+
         if (movement != Vector3.zero)
         {
             Quaternion targetDir = Quaternion.LookRotation(movement);
@@ -64,12 +82,10 @@ public class JetController : MonoBehaviour
     }
     public void OnBrake()
     {
-        if (transform.position.y < flyHeight)
-        {
-            targetRotationUp = Quaternion.Euler(maxUpRotationAngle, transform.rotation.eulerAngles.y, 0);
-            FlyToHeight();
-            RotationJet();
-        }
+        targetRotationUp = Quaternion.Euler(maxUpRotationAngle, transform.rotation.eulerAngles.y, 0);
+        FlyToHeight();
+        RotationJet();
+        PlaySmoke();
     }
 
     public void OnBrakeOff()
@@ -77,32 +93,38 @@ public class JetController : MonoBehaviour
         Gravity_Down();
     }
 
+    public void OnGasPressed()
+    {
+        targetRotationUp = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0);
+        DescendToGround();
+        RotationJet();
+    }
+    public void OnGasReleased()
+    {
+        Gravity_Down();
+       
+    }
     public void OnAcceleration()
     {
-
-        AudioManager.instance.OnJetMove();
+        //AudioManager.instance.OnJetMove();
+        
         moveVertical = 1;
-
     }
     public void OnAccelerationBack()
     {
-        AudioManager.instance.StopJetMove();
-        moveVertical = 0.1f;
+        //AudioManager.instance.StopJetMove();
+        moveVertical = 0;
     }
 
     public void OnDeceleration()
     {
-        AudioManager.instance.OnJetMove();
-        if (transform.position.y > 0)
-        {
-            targetRotationUp = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0);
-            DescendToGround();
-            RotationJet();
-        }
+        // AudioManager.instance.OnJetMove();
+        moveVertical = -1f;
     }
     public void OnDecelerationBack()
     {
-        AudioManager.instance.StopJetMove();
+        //AudioManager.instance.StopJetMove();
+        moveVertical = 0;
     }
 
     public void Steer_Left()
@@ -132,17 +154,15 @@ public class JetController : MonoBehaviour
             DescendToGround();
             RotationJet();
         }
-
-       
     }
     void MoveRotation()
     {
         targetRotationMove = targetRotationUp;
-        if (transform.position.y > -300f && moveVertical > 0)
+        if (transform.position.y > -315f && moveVertical > 0)
         {
             targetRotationMove = Quaternion.Euler(maxMoveRotationAngle, transform.rotation.eulerAngles.y, 0);
         }
-        else if (transform.position.y > -300f && ((moveHorizontal < 0) || (moveHorizontal >0)))
+        else if (transform.position.y > -315f && ((moveHorizontal < 0) || (moveHorizontal > 0)))
         {
             targetRotationMove = Quaternion.Euler(maxMoveRotationAngle, transform.rotation.eulerAngles.y, 0);
         }
@@ -158,26 +178,29 @@ public class JetController : MonoBehaviour
     {
         if (transform.position.y < flyHeight)
         {
-            AudioManager.instance.OnJetMove();
+            //AudioManager.instance.OnJetMove();
             transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, flyHeight, transform.position.z), Time.deltaTime * flySpeed);
         }
     }
 
-   
+
 
     void DescendToGround()
     {
         if (transform.position.y > -345f)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x,-338f, transform.position.z), Time.deltaTime * descendSpeed);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, -349f, transform.position.z), Time.deltaTime * descendSpeed);
             targetRotationUp = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0);
+        }else
+        {
+            StopSmoke();
         }
     }
 
 
     void Gravity_Down()
     {
-        if(transform.position.y < -335f)
+        if (transform.position.y < -335f)
         {
             return;
         }
@@ -198,11 +221,17 @@ public class JetController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            StopSmoke();
             isfinished = false;
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            StopSmoke();
+        }
+
         if (collision.gameObject.CompareTag("Respawn"))
         {
             Debug.Log("respawn");
