@@ -10,6 +10,11 @@ public class VehicleUIManager : MonoBehaviour
     private bool isTurningLeft = false;
     private bool isBraking = false;
     private bool isGas = false;
+    private bool isCycle = false;
+    private bool isScooter = false;
+    private bool isAuto = false;
+    private bool isJet = false;
+    private AudioClip General;
     public static VehicleUIManager instance;
 
     [SerializeField] private GameObject activeVehicle;
@@ -28,7 +33,10 @@ public class VehicleUIManager : MonoBehaviour
 
     private void Start()
     {
-       
+        isCycle = false;
+        isScooter = false;
+        isAuto = false;
+        isJet = false;
         GameObject x = GameObject.FindWithTag("Car");
         GetPlayerVehicle(x);
     }
@@ -36,10 +44,47 @@ public class VehicleUIManager : MonoBehaviour
     public void GetPlayerVehicle(GameObject temp)
     {
         activeVehicle = temp;
+        TypeOfVehicle type = activeVehicle.GetComponent<TypeOfVehicle>();
+        if(type !=null)
+        {
+            TypeVehicle vehicle = type.Type;
+            if(TypeVehicle.Cycle == vehicle)
+            {
+                isCycle = true;
+            }
+            else if(TypeVehicle.Scooty == vehicle)
+            {
+                isScooter = true;
+            }
+            else if(TypeVehicle.Auto == vehicle)
+            {
+                isAuto = true;
+            }
+            else if(TypeVehicle.Jet == vehicle)
+            {
+                isJet = true;
+            }
+        }
     }
 
     private void Update()
     {
+        if(isCycle)
+        {
+            General = AudioManager.instance.cycle;
+        }
+        if (isScooter)
+        {
+            General = AudioManager.instance.scooter;
+        }
+        if (isAuto)
+        {
+            General = AudioManager.instance.auto;
+        }
+        if(isJet)
+        {
+            General = AudioManager.instance.jet;
+        }
         if (activeVehicle == null)
         {
             if (activeVehicle == null)
@@ -65,11 +110,13 @@ public class VehicleUIManager : MonoBehaviour
         if (isMovingForward)
         {
             activeVehicle.SendMessage("OnAcceleration", SendMessageOptions.DontRequireReceiver);
+            
         }
 
         if (isMovingBackward)
         {
             activeVehicle.SendMessage("OnDeceleration", SendMessageOptions.DontRequireReceiver);
+           
         }
 
         if (isTurningRight)
@@ -96,11 +143,13 @@ public class VehicleUIManager : MonoBehaviour
     public void OnGasPress()
     {
         isGas = true;
+        AudioManager.instance.PlayAcc(General);
     }
 
     public void OnGasReleased()
     {
         isGas = false;
+        AudioManager.instance.PlayOff();
         activeVehicle.SendMessage("OnGasReleased", SendMessageOptions.DontRequireReceiver);
     }
 
@@ -119,22 +168,26 @@ public class VehicleUIManager : MonoBehaviour
     public void OnForwardButtonPressed()
     {
         isMovingForward = true;
+        AudioManager.instance.PlayAcc(General);
     }
 
     public void OnForwardButtonReleased()
     {
         isMovingForward = false;
+        AudioManager.instance.PlayOff();
         activeVehicle.SendMessage("OnAccelerationBack", SendMessageOptions.DontRequireReceiver);
     }
 
     public void OnBackwardButtonPressed()
     {
         isMovingBackward = true;
+        AudioManager.instance.PlayAcc(General);
     }
 
     public void OnBackwardButtonReleased()
     {
         isMovingBackward = false;
+        AudioManager.instance.PlayOff();
         activeVehicle.SendMessage("OnDecelerationBack", SendMessageOptions.DontRequireReceiver);
     }
 

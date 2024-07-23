@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using System;
-using System.Data;
-using Unity.VisualScripting;
 
 public class Menu_Manager : MonoBehaviour
 {
@@ -16,18 +12,21 @@ public class Menu_Manager : MonoBehaviour
     [SerializeField] Camera CAM;
     [SerializeField] GameObject point;
     [SerializeField] Transform vsa;
+    
 
-    private void Awake()
-    {
-        
-    }
+   
     private void Start()
     {
-
+        // noreset();
+        Game_Manager.instance.isPlayScene = true;
+        Debug.Log("I value :" + PlayerPrefs.GetInt("Scene"));
+        if (PlayerPrefs.GetInt("Scene") > 0)
+        {
+            noreset();
+            PlayerPrefs.SetInt("Scene",2);
+        }
+        Player_Data.SaveLoad(1);
         Time.timeScale = 1;
-        
-
-
     }
     public void PLAY()
     {
@@ -51,11 +50,7 @@ public class Menu_Manager : MonoBehaviour
     }
     public void level_menu()
     {
-       
-        
         vehicle_selection.SetActive(true);
-    
-
     }
     public void quit()
     {
@@ -70,6 +65,7 @@ public class Menu_Manager : MonoBehaviour
         int[] mpty = new int[8];
         SaveSystem.SaveIntArray(mpty);
         Player_Data.owned_vehicle =mpty;
+        Player_Data.load();
     }
     public void noreset()
     {
@@ -81,18 +77,9 @@ public class Menu_Manager : MonoBehaviour
         {
             Debug.LogException(e);
         }
-
-       
-        for (int i = 0; i < Player_Data.no_of_owned_vehicle; i++)
-        {
-           Debug.Log( Player_Data.owned_vehicle[i]);
-        }
         
         Button_Data.level_sd();
         cashtext.text =Player_Data.cash.ToString();
-        Debug.Log("OWNED_VEHICL"+Player_Data.no_of_owned_vehicle);
-        Debug.Log("level" + Player_Data.level);
-        Debug.Log("cash" + Player_Data.cash);
     }
     private void OnApplicationQuit()
     {

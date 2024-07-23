@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -39,18 +38,16 @@ public class Nav_Gps : MonoBehaviour
     {
         if (TargetPrefab == null)
         {
-            int i = 0;
             GameObject targetObject = GameObject.FindWithTag("Finish");
             TargetPrefab = targetObject;
-            Debug.Log("Active Target " + ++i);
+           // Debug.Log("Active Target " + ++i);
         }
     }
     public void GetActivePlayer()
     {
-        int i = 0;
         GameObject car = GameObject.FindWithTag("Car");
         PlayerPrefab = car;
-        Debug.Log("Active Player " + ++i);
+        //Debug.Log("Active Player " + ++i);
     }
 
     public void DrawPath()

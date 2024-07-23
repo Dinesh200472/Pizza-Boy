@@ -18,6 +18,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     void Start()
     {
+        JetController.isJet = false;
         Time.timeScale = 1;
         rayLength = GetComponent<CapsuleCollider>().height / 2 + 0.2f;
         velocity = rb.transform.InverseTransformDirection(rb.velocity);
@@ -25,7 +26,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     void Update()
     {
-        GetInput();
+        //GetInput();
         Done = isfinished;
        
     }
@@ -44,14 +45,14 @@ public class ScootyController : MonoBehaviour, IVehicleController
 
     public void OnAcceleration()
     {
-        AudioManager.instance.OnScooterMove(); 
+        //AudioManager.instance.OnScooterMove(); 
         Debug.Log("OnAcceleration called");
         moveInput = 1;
     }
 
     public void OnAccelerationBack()
     {
-        AudioManager.instance.StopScooterMove();
+       // AudioManager.instance.StopScooterMove();
         Debug.Log("OnAccelerationBack called");
         moveInput = 0.01f;
     }
@@ -178,6 +179,8 @@ public class ScootyController : MonoBehaviour, IVehicleController
         if (other.gameObject.CompareTag("Finish"))
         {
             finish_manager.finish_fn();
+            Destroy(other.gameObject);
+            Game_Manager.num -= 1;
             isfinished = true;
         }
 
@@ -197,7 +200,7 @@ public class ScootyController : MonoBehaviour, IVehicleController
             Debug.Log("respawn");
             try
             {
-                ui_manager.crashed();
+                ui_manager.instance.crashed();
                 Destroy(collision.gameObject);
 
 

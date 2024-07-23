@@ -3,6 +3,7 @@ using UnityEngine;
 public class JetController : MonoBehaviour
 {
     public static bool isJet = false;
+    public GameObject t1;//, t2;
     public GameObject smoke;
     public float GravitySpeed;
     public float flyHeight = 10f;
@@ -18,6 +19,7 @@ public class JetController : MonoBehaviour
     private Quaternion targetRotationUp, targetRotationMove;
 
     public static bool isfinished;
+    public static bool ismove;
     private bool Done;
     public bool osjet = false;
 
@@ -57,15 +59,19 @@ public class JetController : MonoBehaviour
     void PlaySmoke()
     {
         var particleSystem = smoke.GetComponent<ParticleSystem>();
-        //particleSystem.Clear(); // Clear the particle system to reset it
+        //particleSystem.Clear();
         particleSystem.Play();
+       // t1.GetComponent<TrailRenderer>().emitting = true;
+       //t2.GetComponent<TrailRenderer>().emitting = true;
     }
 
     void StopSmoke()
     {
         var particleSystem = smoke.GetComponent<ParticleSystem>();
-        particleSystem.Stop();
-        particleSystem.Clear(); // Clear the particle system to ensure it stops
+         particleSystem.Stop();
+        // particleSystem.Clear();
+       // t1.GetComponent<TrailRenderer>().emitting = false;
+       // t2.GetComponent<TrailRenderer>().emitting = false;
     }
     void MoveInAir()
     {
@@ -107,12 +113,13 @@ public class JetController : MonoBehaviour
     public void OnAcceleration()
     {
         //AudioManager.instance.OnJetMove();
-        
+        ismove = true;
         moveVertical = 1;
     }
     public void OnAccelerationBack()
     {
         //AudioManager.instance.StopJetMove();
+        ismove = false;
         moveVertical = 0;
     }
 
@@ -211,6 +218,10 @@ public class JetController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            //Debug.Log("Jet Triggered");
+            StopSmoke();
+            Destroy(other.gameObject);
+            Game_Manager.num -= 1;
             finish_manager.finish_fn();
             isfinished = true;
         }
@@ -221,23 +232,19 @@ public class JetController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {
-            StopSmoke();
+            
             isfinished = false;
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Ground"))
-        {
-            StopSmoke();
-        }
 
         if (collision.gameObject.CompareTag("Respawn"))
         {
             Debug.Log("respawn");
             try
             {
-                ui_manager.crashed();
+                ui_manager.instance.crashed();
 
             }
             catch (System.Exception e)

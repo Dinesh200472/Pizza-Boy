@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 7701241687621907359}
   - component: {fileID: 4750684011691404652}
   - component: {fileID: 6053585731740096498}
-  - component: {fileID: 8822814333930727883}
   m_Layer: 8
   m_Name: Handle_Origin
   m_TagString: Untagged
@@ -342,28 +341,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8822814333930727883
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264118727001838315}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 767ba1d9ec0c49543818dd53c9457228, type: 3}
 --- !u!1 &450638202254576777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,7 +1040,6 @@ GameObject:
   - component: {fileID: 365004172102496943}
   - component: {fileID: 5791312994321661606}
   - component: {fileID: 1350033083925884445}
-  - component: {fileID: 4978499783392831846}
   m_Layer: 8
   m_Name: FrontWheel
   m_TagString: Untagged
@@ -1136,27 +1112,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4978499783392831846
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865424094280402543}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.13
-  m_Center: {x: 0, y: -0.00000011920929, z: 0.026241345}
 --- !u!1 &1874572217923957997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1737,6 @@ GameObject:
   - component: {fileID: 3211030861721163851}
   - component: {fileID: 6517921414805354785}
   - component: {fileID: 1820488258216286607}
-  - component: {fileID: 1458033057730142592}
   m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
@@ -1861,28 +1815,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1458033057730142592
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802898778776562602}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 767ba1d9ec0c49543818dd53c9457228, type: 3}
 --- !u!1 &2825128561423254824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,7 +2451,6 @@ GameObject:
   - component: {fileID: 5194547064587263040}
   - component: {fileID: 4663065997185694862}
   - component: {fileID: 8896772784558250759}
-  - component: {fileID: 3060751241136746500}
   m_Layer: 8
   m_Name: Right_Handle
   m_TagString: Untagged
@@ -2593,27 +2524,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3060751241136746500
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4399601869552069088}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4405444558182627997
 GameObject:
   m_ObjectHideFlags: 0
@@ -2688,8 +2598,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7584209044673183919}
   - component: {fileID: 168313984645698585}
-  - component: {fileID: 904091938936736338}
   - component: {fileID: 7823924235586859716}
+  - component: {fileID: 904091938936736338}
+  - component: {fileID: -221147723241929571}
   m_Layer: 8
   m_Name: v3
   m_TagString: Car
@@ -2747,6 +2658,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &7823924235586859716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4708301024121760701}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.21, y: 6.11, z: 1.5}
+  m_Center: {x: 0, y: 2.2, z: 0}
 --- !u!114 &904091938936736338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2776,27 +2708,19 @@ MonoBehaviour:
   tiltAngle: 25
   tiltSpeed: 5
   ui: {fileID: 0}
---- !u!65 &7823924235586859716
-BoxCollider:
+--- !u!114 &-221147723241929571
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4708301024121760701}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5, y: 4.5, z: 1.5}
-  m_Center: {x: 0, y: 2.2, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33fe30019d2b62e4db047e4cf5167c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &4788560890726092533
 GameObject:
   m_ObjectHideFlags: 0
@@ -3071,7 +2995,6 @@ GameObject:
   - component: {fileID: 8475475334004305912}
   - component: {fileID: 7197686125329920275}
   - component: {fileID: 7201110103330344534}
-  - component: {fileID: 1759310298116685266}
   m_Layer: 8
   m_Name: Left_Handle
   m_TagString: Untagged
@@ -3145,27 +3068,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1759310298116685266
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5142459550244395403}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5146469672333711179
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,7 +4723,6 @@ GameObject:
   - component: {fileID: 3189357870741326582}
   - component: {fileID: 4085323032745169791}
   - component: {fileID: 290023464725680385}
-  - component: {fileID: 4637336067869665098}
   m_Layer: 8
   m_Name: BWheel
   m_TagString: Untagged
@@ -4894,27 +4795,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4637336067869665098
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8819215274579076776}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.13
-  m_Center: {x: 0, y: -0.00000011920929, z: 0.026241345}
 --- !u!1 &8921862863253561982
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class Vehicle_selection : MonoBehaviour
     public GameObject vehicleselection;
     public Camera cam;
     public GameObject point;
-    private int i = 0;
+   
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class Vehicle_selection : MonoBehaviour
         if (instance == null&&activeScene==0)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scene changes
+           
         }
         else
         {
@@ -59,14 +59,7 @@ public class Vehicle_selection : MonoBehaviour
 
     }
 
-    public void OnDestroy_Duplicate()
-    {
-        i++;
-        if(i==2)
-        {
-            Destroy(gameObject);
-        }
-    }
+    
     public void right()
     {
         v = v + 1;

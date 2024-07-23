@@ -9,6 +9,7 @@ public class _RewardedAds : MonoBehaviour, IUnityAdsLoadListener,IUnityAdsShowLi
     [SerializeField] private string IosAdUnit_ID;
     private string AdUnit_ID;
     public static bool isrewarded = false;
+    public int num;
     private void Awake()
     {
 #if UNITY_iOS
@@ -20,12 +21,12 @@ AdUnit_ID= IosAdUnit_ID;
     public void LoadRewardedAd()
     {
 
-        isrewarded = false;
+        //isrewarded = false;
         Advertisement.Load(AdUnit_ID, this);
     }
-    public void ShowRewadedAd()
+    public void ShowRewadedAd(int n)
     {
-       
+        num = n;
         Advertisement.Show(AdUnit_ID, this);
         LoadRewardedAd();
     }
@@ -33,7 +34,7 @@ AdUnit_ID= IosAdUnit_ID;
 
     public void OnUnityAdsAdLoaded(string placementId)
     {
-        isrewarded = false  ;
+        //isrewarded = false  ;
         throw new System.NotImplementedException();
     }
 
@@ -59,19 +60,38 @@ AdUnit_ID= IosAdUnit_ID;
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if (placementId == AndroidAdUnit_ID && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        if (placementId == AdUnit_ID)
         {
-           isrewarded   = true;
-            Debug.Log("Grand------Reward");
+            if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+            {
+                isrewarded = true;
+                if(num==1)
+                {
+                    Debug.Log("Extra Time Given");
+                    Game_Manager.instance.extratime();
+                    num = -1;
+                }
+
+                if(num == 0)
+                {
+                    float extracash = Level_Data.Cash * 2;
+                    ui_manager.instance.cash_text.text = extracash.ToString();
+                }
+                Debug.Log("Grant reward ");
+            }
+            else
+            {
+                isrewarded = false;
+            }
         }
 
+        Debug.Log("Adds played ");
+        _Ads_Initialization.instance.AddLoad();
     }
 
-    public static bool adcomplete()
+    public static bool adComplete()
     {
         return isrewarded;
-       
-
     }
 
 

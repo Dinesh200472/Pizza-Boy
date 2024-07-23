@@ -17,6 +17,6 @@ MonoBehaviour:
   target:
   - {fileID: 3729677281036271806, guid: e993fa6eaeea33d40b0510d6e25d9e5a, type: 3}
   - {fileID: 9139379648675468231, guid: 9ad955a947bfcdc4181d989dfcbcd333, type: 3}
-  pizza: 0600000008000000
+  pizza: 0100000003000000
   Cash: 400
   timer: 300

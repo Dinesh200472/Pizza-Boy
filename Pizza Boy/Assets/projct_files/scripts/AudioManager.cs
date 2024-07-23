@@ -1,136 +1,81 @@
-using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource Button_Click, Cycle, Scooter, Jet, Car, Crash, Cash, TimeUp, BG_;
-    public AudioClip button_click, cycle, scooter, jet, car, crash, cash, timeup, bg;
+    [Header("-----Audio Source-----")]
+    [SerializeField] AudioSource BackGround;
+    [SerializeField] AudioSource Sfx;
+    [SerializeField] AudioSource Acceleration;
 
+
+    public AudioClip background,buttonclick, cycle, scooter, auto, jet, crash, cash, timeup, finish, Sdelivery,LevelFailed;
 
     public static AudioManager instance;
+
     private void Awake()
     {
-    }
-
-    void Start()
-    {
-        Button_Click = gameObject.AddComponent<AudioSource>();
-        Cycle = gameObject.AddComponent<AudioSource>();
-        Scooter = gameObject.AddComponent<AudioSource>();
-        Jet = gameObject.AddComponent<AudioSource>();
-        Car = gameObject.AddComponent<AudioSource>();
-        Crash = gameObject.AddComponent<AudioSource>();
-        Cash = gameObject.AddComponent<AudioSource>();
-        TimeUp = gameObject.AddComponent<AudioSource>();
-        BG_ = gameObject.AddComponent<AudioSource>();
-
-        Button_Click.clip = button_click;
-        Cycle.clip = cycle;
-        Scooter.clip = scooter;
-        Jet.clip = jet;
-        Car.clip = car;
-        Crash.clip = crash;
-        Cash.clip = cash;
-        TimeUp.clip = timeup;
-        BG_.clip = bg;
-
-        Cycle.loop = true;
-        Scooter.loop = true; 
-        Jet.loop = true;
-        Car.loop = true;
-    }
-
-    public void OnBG()
-    {
-        BG_.Play();
-    }
-
-
-    public void OnButtonClick()
-    {
-       
-       // Button_Click.Play();
-    }
-    public void OnCycleMove()
-    {
-        if (!Cycle.isPlaying)
+        if(instance == null)
         {
-            Cycle.Play();
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-    }
-
-    public void StopCycleMove()
-    {
-        if (Cycle.isPlaying)
+        else
         {
-            Cycle.Stop();
+            Destroy(gameObject);
         }
+        
     }
 
-    public void OnScooterMove()
+    private void Update()
     {
-        if (!Scooter.isPlaying)
+        if(Game_Manager.instance.isPlayScene)
         {
-            Scooter.Play();
+            BackGround.volume = 1;
         }
-    }
-
-    public void StopScooterMove()
-    {
-        if (Scooter.isPlaying)
+        else
         {
-            Scooter.Stop();
+            BackGround.volume = 0.1f;
         }
-    }
 
-    public void OnJetMove()
-    {
-        if (!Jet.isPlaying)
+        if(ui_manager.instance.isCrashed)
         {
-            Jet.Play();
+            Acceleration.Stop();
         }
+
     }
 
-    public void StopJetMove()
+    private void Start()
     {
-        if (Jet.isPlaying)
-        {
-            Jet.Stop();
-        }
+        BackGround.clip = background;
+        BackGround.Play();
     }
 
-    public void OnCarMove()
+    public void OnClickButton()
+    { 
+        Sfx.PlayOneShot(buttonclick);
+    }
+
+    public void PlaySound(AudioClip clip)
     {
-        if (!Car.isPlaying)
-        {
-            Car.Play();
-        }
+        Sfx.PlayOneShot(clip);
     }
 
-    public void StopCarMove()
+    public void PlayAcc(AudioClip clip)
     {
-        if (Car.isPlaying)
-        {
-            Car.Stop();
-        }
+        Acceleration.clip = clip;
+        Acceleration.loop = true;
+        Acceleration.Play();
     }
 
-    public void OnCrash()
+    public void LevelFail(AudioClip clip)
     {
-        Crash.Play();
+        Acceleration.PlayOneShot(clip);
     }
 
-    public void OnCashCollect()
+    public void PlayOff()
     {
-        Cash.Play();
+        Acceleration.loop = false;
+        Acceleration.Stop();
     }
-
-    public void OnTimeUp()
-    {
-        TimeUp.Play();
-    }
-
-
-
 
 }

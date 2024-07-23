@@ -5,7 +5,7 @@ using UnityEngine;
 public class Vehicles_Manager : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    public GameObject stage1, stage2;
     public GameObject[] Vehicle;
     int len;
     void Start()
@@ -27,44 +27,47 @@ public class Vehicles_Manager : MonoBehaviour
         }
         if (len > 5 && len < 11)
         {
+            Stage1();
             Stage2();
         }
         if (len > 11 && len < 16)
         {
+            Stage1();
+            Stage2();
             Stage3();
         }
         if (len > 16 && len < 21)
         {
+            Stage1();
+            Stage2();
+            Stage3();
             Stage4();
         }
     }
 
     public void Stage1()
     {
-        
-        for(int i = 0;i<35;i++)
-        {
-            Vehicle[i].SetActive(true);
-        }
+        stage1.SetActive(true);
     }
 
     public void Stage2()
     {
-        for (int i = 35; i < 70; i++)
+        stage2.SetActive(true);
+        for (int i = 0; i < 35; i++)
         {
             Vehicle[i].SetActive(true);
         }
     }
     public void Stage3()
     {
-        for (int i = 70; i < 105; i++)
+        for (int i = 35; i < 70; i++)
         {
             Vehicle[i].SetActive(true);
         }
     }
     public void Stage4()
     {
-        for (int i = 105; i < 140; i++)
+        for (int i = 70; i < 105; i++)
         {
             Vehicle[i].SetActive(true);
         }

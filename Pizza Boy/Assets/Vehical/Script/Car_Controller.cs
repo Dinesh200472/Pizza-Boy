@@ -41,6 +41,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     void Start()
     {
         Time.timeScale = 1;
+        JetController.isJet = false;
         carrb = GetComponent<Rigidbody>();
         carrb.centerOfMass = _centerofmass;
     }
@@ -68,14 +69,14 @@ public class Car_Controller : MonoBehaviour,IVehicleController
 
     public void OnAcceleration()
     {
-        AudioManager.instance.OnCarMove();
+        //AudioManager.instance.OnCarMove();
         moveInput = 1;
             
     }
     public void OnAccelerationBack()
     {
-        AudioManager.instance.StopCarMove();
-        moveInput = 0.01f;
+        //AudioManager.instance.StopCarMove();
+        moveInput = 0;
     }
 
     public void OnDeceleration()
@@ -84,7 +85,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     }
     public void OnDecelerationBack()
     {
-        moveInput = -0.01f;
+        moveInput = 0;
     }
 
     public void Steer_Left()
@@ -113,7 +114,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     }
     private void Move()
     {
-        AudioManager.instance.OnCarMove();
+        //AudioManager.instance.OnCarMove();
         foreach (var wheel in wheels)
         {
             if (wheel.axel == Axel.Rear)
@@ -182,6 +183,8 @@ public class Car_Controller : MonoBehaviour,IVehicleController
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            Destroy(other.gameObject);
+            Game_Manager.num -= 1;
             finish_manager.finish_fn();
             isfinished = true;
         }
@@ -202,7 +205,7 @@ public class Car_Controller : MonoBehaviour,IVehicleController
             Debug.Log("respawn");
             try
             {
-                ui_manager.crashed();
+                ui_manager.instance.crashed();
 
             }
             catch (System.Exception e)

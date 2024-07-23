@@ -30,6 +30,12 @@ public static class Player_Data
         cash += x;
        
     }
+
+    public static void SaveLoad(int n)
+    {
+        PlayerPrefs.SetInt("Scene", n);
+    }
+
     public static void save(int l, int c)
     {
         

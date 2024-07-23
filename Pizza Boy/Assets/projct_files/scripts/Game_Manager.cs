@@ -1,14 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public  class Game_Manager : MonoBehaviour
 {
     public GameObject gps;
-    
+    public bool isPlayScene = false;
     public static bool isretry;
     public GameObject Temp_Target;
     public GameObject player;
@@ -19,16 +17,17 @@ public  class Game_Manager : MonoBehaviour
     public bool isTimerRunning;
     public static  float timeRemaining;
     public bool isfinished;
-    private GameObject prefabToSpawn;
-    private Level_Manager levelManager;
+    public static int num;
+   // private GameObject prefabToSpawn;
+   // private Level_Manager levelManager;
     public GameObject next_level_ui;
     [SerializeField] private TextMeshProUGUI nop;
-    
-   
+
+    public static Game_Manager instance;
+
     private void Awake()
     {
-        DisplayCash();
-        display_nop();
+        instance = this;
     }
 
 
@@ -37,7 +36,9 @@ public  class Game_Manager : MonoBehaviour
 
     public void Start()
     {
-       
+        isPlayScene = false;
+        num = Level_Data.NoOfPizzas;
+        
         Debug.Log("no of pizzas ===="+Level_Data.NoOfPizzas);
         DisplayCash();
         isfinished = true;
@@ -54,7 +55,8 @@ public  class Game_Manager : MonoBehaviour
     
     private void Update()
     {
-        extratime();
+        //extratime();
+        display_nop();
         if (isTimerRunning)
         {
             if (timeRemaining > 0)
@@ -70,10 +72,12 @@ public  class Game_Manager : MonoBehaviour
                 timeup_fn();
             }
         }
-        if(Car_Controller.isfinished&&isfinished || CycleController.  isfinished && isfinished || ScootyController.isfinished && isfinished)
+        if(Car_Controller.isfinished && isfinished || CycleController.  isfinished && isfinished || ScootyController.isfinished && isfinished)
         {
             finishfn();
             isfinished = false;
+           
+           
 
         }
         DisplayCash();
@@ -83,9 +87,11 @@ public  class Game_Manager : MonoBehaviour
     }
     IEnumerator SpawnTargets()
     {
+       
         for (int i = 0; i < Level_Data.NoOfPizzas; i++)
         {
             Temp_Target = Instantiate(Level_Data.Finishs[i], Level_Data.Finishs[i].transform.position, Level_Data.Finishs[i].transform.rotation);
+            
             yield return StartCoroutine(WaitForPlayerMsg());
             
         }
@@ -99,16 +105,15 @@ public  class Game_Manager : MonoBehaviour
     }
     bool PlayerMsg()
     {
-        GameObject Temp = GameObject.FindWithTag("Finish");
         IVehicleController GetCurrentVehicle = player.GetComponent<IVehicleController>();
         if(GetCurrentVehicle.OnTarget() == true)
         {
-            Destroy(Temp);//Destroy Current Target
-            
             return true;
         }
         return false;
     }
+
+
     public void level_load()
     {
         try
@@ -150,19 +155,20 @@ public  class Game_Manager : MonoBehaviour
        
 
         Time.timeScale = 0;
-       // AudioManager.instance.OnTimeUp();
+        AudioManager.instance.PlaySound(AudioManager.instance.timeup);
         timeup.SetActive(true);
     }
     void  DisplayCash()
     {
         int cash = Player_Data.cash;
-        Debug.Log($"Cash: {cash}");
+       // Debug.Log($"Cash: {cash}");
         cashtext.text = cash.ToString();
 
     }
     public void next_level()
     {
         Button_Data.nextlevel(Level_Data.Level);
+        Player_Data.save_vehicle();
     }
     public void assign()
     {
@@ -174,7 +180,7 @@ public  class Game_Manager : MonoBehaviour
         Invoke("Reset_Gps", 2);
         Debug.Log("------resert-----");
         DisplayCash();
-        display_nop();
+        
     }
     public  void Reset_Gps()
     {
@@ -183,23 +189,21 @@ public  class Game_Manager : MonoBehaviour
     }
     public void display_nop()
     {
-        nop.text = Level_Data.NoOfPizzas + "/";
+        nop.text = num + "/";
 
     }
     public void extratime()
     {
-        if(_RewardedAds.adcomplete())
-        {
             Debug.Log("  -------------------------extratime-------------------------");
             timeRemaining = Level_Data.time / 2;
             isTimerRunning = true;
             return;
-        }
-        _RewardedAds.isrewarded = false;
-       
     }
   
-   
+   public void CrashTime(float time)
+    {
+        timeRemaining = time;
+    }
     
     
 

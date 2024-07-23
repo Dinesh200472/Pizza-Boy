@@ -32,6 +32,7 @@ public class CycleController : MonoBehaviour,IVehicleController
 
     void Start()
     {
+        JetController.isJet = false;
         isfinished = false;
         rb = GetComponent<Rigidbody>();
     }
@@ -39,7 +40,7 @@ public class CycleController : MonoBehaviour,IVehicleController
     void Update()
     {
         Done = isfinished ? true : false;
-       GetInput();
+       //GetInput();
         RotateHandlebar();
         RotatePedals();
         RotateWheels();
@@ -62,14 +63,14 @@ public class CycleController : MonoBehaviour,IVehicleController
     }
     public void OnAcceleration()
     {
-        AudioManager.instance.OnCycleMove();
+        //AudioManager.instance.OnCycleMove();
         Debug.Log("Cycle accelerating");
         moveInput = 1;
     }
 
     public void OnAccelerationBack()
     {
-        AudioManager.instance.StopCycleMove();
+        //AudioManager.instance.StopCycleMove();
         Debug.Log("Cycle acceleration back");
         moveInput = 0.01f;
     }
@@ -192,6 +193,8 @@ public class CycleController : MonoBehaviour,IVehicleController
         if (other.gameObject.CompareTag("Finish"))
         {
             finish_manager.finish_fn();
+            Destroy(other.gameObject);
+            Game_Manager.num -= 1;
             isfinished = true;
         }
        
@@ -211,7 +214,7 @@ public class CycleController : MonoBehaviour,IVehicleController
             Debug.Log("respawn");
             try
             {
-                ui_manager.crashed();
+                ui_manager.instance.crashed();
                 Destroy(collision.gameObject);  
             
 

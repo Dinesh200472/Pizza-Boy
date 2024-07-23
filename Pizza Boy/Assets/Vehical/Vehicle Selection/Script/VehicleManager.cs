@@ -61,8 +61,8 @@ public class VehicleManager : MonoBehaviour
 
         if (vehicleDataArray[index] != null)
         {
-            Debug.Log("Instantiating vehicle prefab: " + vehicleDataArray[index].vehiclePrefab.name);
-            activeVehicle = Instantiate(vehicleDataArray[index].vehiclePrefab, spawnPos.position, Quaternion.identity);
+            //Debug.Log("Instantiating vehicle prefab: " + vehicleDataArray[index].vehiclePrefab.name);
+            //activeVehicle = Instantiate(vehicleDataArray[index].vehiclePrefab, spawnPos.position, Quaternion.identity);
             CollectableSpawner.instance.GetActivePlayer(activeVehicle);
             VehicleUIManager.instance.GetPlayerVehicle(activeVehicle);
         }
